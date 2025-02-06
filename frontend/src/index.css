@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+    border: 6px solid #d6cfcf; /* Light grey */
+    border-top: 6px solid #605BFF; /* Custom color from your palette */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.loader-small {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #605BFF; /* Blue or your custom color */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(100px, 20px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes cloud-drift-slow {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-80px, -20px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.animate-cloud-drift {
+  animation: cloud-drift 10s ease-in-out infinite;
+}
+
+.animate-cloud-drift-reverse {
+  animation: cloud-drift 15s ease-in-out infinite reverse;
+}
+
+.animate-cloud-drift-slow {
+  animation: cloud-drift-slow 10s ease-in-out infinite;
+}
+
+.animate-cloud-drift-slow-reverse {
+  animation: cloud-drift-slow 35s ease-in-out infinite reverse;
+}

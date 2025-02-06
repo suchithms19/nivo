@@ -1,0 +1,48 @@
+/* Cloud Positions and Animations */
+.cloud-1 {
+  top: 10%;
+  left: -10%;
+  animation: floatCloud1 25s infinite linear;
+}
+
+.cloud-2 {
+  top: 40%;
+  right: -15%;
+  animation: floatCloud2 30s infinite linear;
+}
+
+.cloud-3 {
+  top: 25%;
+  left: 30%;
+  animation: floatCloud3 28s infinite linear;
+}
+
+.cloud-4 {
+  top: 60%;
+  right: 20%;
+  animation: floatCloud4 22s infinite linear;
+}
+
+@keyframes floatCloud1 {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(200px, 40px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes floatCloud2 {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-180px, -30px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes floatCloud3 {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-100px, 50px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes floatCloud4 {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(150px, -40px); }
+  100% { transform: translate(0, 0); }
+}
