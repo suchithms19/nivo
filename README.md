@@ -11,7 +11,7 @@ Nivo is a customer experience software that helps businesses manage customer flo
 ## 🚀 Features
 
 ### Core Functionality
-- **Real-time Queue Management** - Live updates using Socket.io for instant synchronization
+- **Real-time Queue Management** - Live updates for instant synchronization
 - **Smart Appointment Scheduling** - Advanced booking system with time slot management
 - **Customer Self-Service** - QR code-based self-registration and check-in
 - **Multi-Channel Support** - Web dashboard and customer-facing interfaces
@@ -30,15 +30,12 @@ Nivo is a customer experience software that helps businesses manage customer flo
 - **TypeScript** - Type-safe development experience
 - **Vite** - Lightning-fast build tool and dev server
 - **Tailwind CSS** - Utility-first CSS framework
-- **Shadcn/ui** - High-quality, accessible UI components
-- **TanStack Query** - Powerful data fetching and caching
 - **Chart.js** - Interactive analytics and data visualization
 
 ### Backend
 - **Node.js** - JavaScript runtime environment
 - **Express.js** - Fast, minimalist web framework
 - **MongoDB** - NoSQL database for flexible data storage
-- **Mongoose** - Elegant MongoDB object modeling
 - **Zod** - TypeScript-first schema validation
 
 ## 📋 Prerequisites
@@ -93,26 +90,21 @@ npm run dev
 
 Make sure MongoDB is running on your system. The application will automatically create the necessary collections on first run.
 
-Default connection: `mongodb://localhost:27017/testv1`
 
 ## 📝 Environment Variables
 
 Create a `.env` file in the backend directory:
 
 ```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/testv1
-
-# JWT
-JWT_SECRET=your-secret-key-here
-JWT_EXPIRES_IN=7d
-
-# Server
+# Server Configuration
 PORT=5000
-NODE_ENV=development
 
-# CORS
-FRONTEND_URL=http://localhost:5173
+# JWT Configuration  
+JWT_SECRET=your-super-secret-jwt-key-here-change-this-in-production
+
+# Mongodb
+DB=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-db-name
+
 ```
 
 ## 🏗️ Project Structure
