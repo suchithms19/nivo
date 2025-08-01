@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import type { z } from "zod";
 
 // Extended Request interface with user data
-export interface AuthenticatedRequest extends Request {
+interface AuthenticatedRequest extends Request {
 	user?: {
 		userId: string;
 		role: string;
@@ -17,7 +17,7 @@ interface JWTPayload {
 }
 
 // Authentication middleware
-export function authenticateToken(
+function authenticateToken(
 	req: AuthenticatedRequest,
 	res: Response,
 	next: NextFunction,
@@ -47,7 +47,7 @@ export function authenticateToken(
 }
 
 // Admin role verification middleware
-export function isAdmin(
+function isAdmin(
 	req: AuthenticatedRequest,
 	res: Response,
 	next: NextFunction,
@@ -60,7 +60,7 @@ export function isAdmin(
 }
 
 // Validation middleware
-export const validate =
+const validate =
 	<T>(schema: z.ZodSchema<T>) =>
 	async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
@@ -70,3 +70,5 @@ export const validate =
 			res.status(400).json({ error: (error as z.ZodError).errors });
 		}
 	};
+
+export { authenticateToken, isAdmin, validate, type AuthenticatedRequest };
