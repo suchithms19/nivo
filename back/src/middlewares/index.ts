@@ -1,6 +1,1 @@
-export {
-	authenticateToken,
-	isAdmin,
-	validate,
-	type AuthenticatedRequest,
-} from "./auth.js";
+export { authenticateToken, isAdmin, validate } from "./auth.js";

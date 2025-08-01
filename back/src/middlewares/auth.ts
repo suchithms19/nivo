@@ -1,20 +1,7 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import type { z } from "zod";
-
-// Extended Request interface with user data
-interface AuthenticatedRequest extends Request {
-	user?: {
-		userId: string;
-		role: string;
-	};
-}
-
-// JWT payload type
-interface JWTPayload {
-	userId: string;
-	role: string;
-}
+import type { AuthenticatedRequest, JWTPayload } from "../interfaces/auth.js";
 
 // Authentication middleware
 function authenticateToken(
@@ -71,4 +58,4 @@ const validate =
 		}
 	};
 
-export { authenticateToken, isAdmin, validate, type AuthenticatedRequest };
+export { authenticateToken, isAdmin, validate };
