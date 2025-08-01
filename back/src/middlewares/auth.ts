@@ -1,4 +1,4 @@
-import type { Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import type { z } from "zod";
 import type { AuthenticatedRequest, JWTPayload } from "../interfaces/auth.js";
