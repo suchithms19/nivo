@@ -16,8 +16,7 @@ _.log
 report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # dotenv environment variable files
-src/config/.env.development
-src/config/.env.production
+.env
 
 # caches
 .eslintcache
