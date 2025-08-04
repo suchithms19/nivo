@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import type { z } from "zod";
 import type { AuthenticatedRequest, JWTPayload } from "../interfaces/auth.js";
 
-// Authentication middleware
 function authenticateToken(
 	req: AuthenticatedRequest,
 	res: Response,
@@ -33,7 +32,6 @@ function authenticateToken(
 	});
 }
 
-// Admin role verification middleware
 function isAdmin(
 	req: AuthenticatedRequest,
 	res: Response,
@@ -46,7 +44,6 @@ function isAdmin(
 	}
 }
 
-// Validation middleware
 const validate =
 	<T>(schema: z.ZodSchema<T>) =>
 	async (req: Request, res: Response, next: NextFunction): Promise<void> => {
