@@ -1,5 +1,11 @@
 import { Appointment, Patient, User, Queue } from "../models/index.js";
 
+/**
+ * Get available 30-minute time slots for a specific date based on business hours
+ * @param userId - Business owner's user ID
+ * @param date - Date string in ISO format to check availability
+ * @returns Array of available time slots with start and end times in UTC
+ */
 const getAvailableSlots = async (userId: string, date: string) => {
 	const selectedDate = new Date(date);
 
@@ -72,6 +78,12 @@ const getAvailableSlots = async (userId: string, date: string) => {
 	return availableSlots;
 };
 
+/**
+ * Book a new appointment (public self-booking)
+ * @param userId - Business owner's user ID
+ * @param appointmentData - Appointment details including startTime, name, phoneNumber, age
+ * @returns Success message with created appointment and patient data
+ */
 const bookAppointment = async (userId: string, appointmentData: any) => {
 	const { startTime, name, phoneNumber, age } = appointmentData;
 
@@ -124,6 +136,11 @@ const bookAppointment = async (userId: string, appointmentData: any) => {
 	};
 };
 
+/**
+ * Get all appointments for a specific business owner
+ * @param userId - Business owner's user ID
+ * @returns Array of appointments with populated patient details, sorted by start time
+ */
 const getUserAppointments = async (userId: string) => {
 	const appointments = await Appointment.find({ userId })
 		.populate("patientId")
@@ -131,6 +148,12 @@ const getUserAppointments = async (userId: string) => {
 	return appointments;
 };
 
+/**
+ * Cancel an existing appointment
+ * @param appointmentId - Appointment ID to cancel
+ * @param userId - Business owner's user ID for authorization
+ * @returns Success message with updated appointment data
+ */
 const cancelAppointment = async (appointmentId: string, userId: string) => {
 	const appointment = await Appointment.findOneAndUpdate(
 		{
@@ -148,6 +171,11 @@ const cancelAppointment = async (appointmentId: string, userId: string) => {
 	return { message: "Appointment cancelled successfully", appointment };
 };
 
+/**
+ * Get today's scheduled appointments for a business
+ * @param userId - Business owner's user ID
+ * @returns Array of today's appointments with populated patient details
+ */
 const getTodayBookings = async (userId: string) => {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
@@ -167,6 +195,12 @@ const getTodayBookings = async (userId: string) => {
 	return bookings;
 };
 
+/**
+ * Add new appointment booking (authenticated business owner action)
+ * @param userId - Business owner's user ID
+ * @param bookingData - Booking details including name, phoneNumber, age, startTime
+ * @returns Success message with created appointment and patient data
+ */
 const addBooking = async (userId: string, bookingData: any) => {
 	const { name, phoneNumber, age, startTime } = bookingData;
 
@@ -218,6 +252,12 @@ const addBooking = async (userId: string, bookingData: any) => {
 	};
 };
 
+/**
+ * Cancel appointment booking with patient record update
+ * @param appointmentId - Appointment ID to cancel
+ * @param userId - Business owner's user ID for authorization
+ * @returns Success message with cancelled appointment and updated patient status
+ */
 const cancelBooking = async (appointmentId: string, userId: string) => {
 	const appointment = await Appointment.findOneAndUpdate(
 		{
@@ -243,6 +283,12 @@ const cancelBooking = async (appointmentId: string, userId: string) => {
 	return { message: "Appointment cancelled successfully", appointment };
 };
 
+/**
+ * Convert scheduled appointment to waitlist entry (walk-in scenario)
+ * @param appointmentId - Appointment ID to move to waitlist
+ * @param userId - Business owner's user ID for authorization
+ * @returns Success message with updated patient and new queue entry
+ */
 const moveToWaitlist = async (appointmentId: string, userId: string) => {
 	const appointment = await Appointment.findOne({
 		_id: appointmentId,

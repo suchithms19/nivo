@@ -81,11 +81,21 @@ const GetMe = async (userId: string) => {
 	return user;
 };
 
+/**
+ * Get all users in the system (Admin only)
+ * @returns Array of all users without password field
+ */
 const getAllUsers = async () => {
 	const users = await User.find().select("-password");
 	return users;
 };
 
+/**
+ * Change user role (Admin only)
+ * @param userId - User ID to update
+ * @param role - New role to assign ('admin' or 'user')
+ * @returns Updated user without password field
+ */
 const changeUserRole = async (userId: string, role: string) => {
 	const user = await User.findByIdAndUpdate(
 		userId,
@@ -100,6 +110,11 @@ const changeUserRole = async (userId: string, role: string) => {
 	return user;
 };
 
+/**
+ * Get real-time queue status for a specific business
+ * @param userId - Business owner's user ID
+ * @returns Object with waiting and serving patient counts
+ */
 const getQueueStatus = async (userId: string) => {
 	const waitingCount = await Queue.countDocuments({
 		userId,
@@ -117,6 +132,11 @@ const getQueueStatus = async (userId: string) => {
 	};
 };
 
+/**
+ * Get business name by user ID
+ * @param userId - User ID of business owner
+ * @returns User object with only businessName field
+ */
 const getBusinessName = async (userId: string) => {
 	const user = await User.findById(userId).select("businessName");
 	if (!user) {
@@ -125,6 +145,11 @@ const getBusinessName = async (userId: string) => {
 	return user;
 };
 
+/**
+ * Find user by their URL-friendly business name
+ * @param businessNameForUrl - URL-friendly business identifier
+ * @returns Complete user object for the business
+ */
 const getUserByBusiness = async (businessNameForUrl: string) => {
 	const user = await User.findOne({ businessNameForUrl });
 	if (!user) {
@@ -133,6 +158,11 @@ const getUserByBusiness = async (businessNameForUrl: string) => {
 	return user;
 };
 
+/**
+ * Get patient statistics with automatic daily count reset
+ * @param userId - User ID to get statistics for
+ * @returns Object with total patients, daily patients, and last reset date
+ */
 const getPatientStats = async (userId: string) => {
 	const user = await User.findById(userId);
 	if (!user) {
@@ -148,6 +178,12 @@ const getPatientStats = async (userId: string) => {
 	};
 };
 
+/**
+ * Update business operating hours with validation
+ * @param userId - User ID of business owner
+ * @param businessHoursData - Object containing startHour, startMinute, endHour, endMinute
+ * @returns Success message with updated business hours
+ */
 const updateBusinessHours = async (userId: string, businessHoursData: any) => {
 	const { startHour, startMinute, endHour, endMinute } = businessHoursData;
 
@@ -194,6 +230,12 @@ const updateBusinessHours = async (userId: string, businessHoursData: any) => {
 	};
 };
 
+/**
+ * Update complete business hours object (including weekend settings)
+ * @param userId - User ID of business owner
+ * @param businessHours - Complete business hours object
+ * @returns Success message with updated user object
+ */
 const updateBusinessHoursFull = async (userId: string, businessHours: any) => {
 	const user = await User.findByIdAndUpdate(
 		userId,

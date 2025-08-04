@@ -1,5 +1,11 @@
 import { Queue, Patient, User } from "../models/index.js";
 
+/**
+ * Add a new patient to the waitlist (authenticated user action)
+ * @param userId - Business owner's user ID
+ * @param patientData - Object containing patient information (name, phoneNumber, age)
+ * @returns Success message with created patient and queue entry
+ */
 const addPatient = async (userId: string, patientData: any) => {
 	const { name, phoneNumber, age } = patientData;
 
@@ -33,6 +39,12 @@ const addPatient = async (userId: string, patientData: any) => {
 	return { message: "Patient added to waitlist", patient, queueEntry };
 };
 
+/**
+ * Get current waitlist for a business (with admin override)
+ * @param userId - Business owner's user ID
+ * @param role - User role ('admin' sees all, others see only their queue)
+ * @returns Array of waiting patients with populated patient details
+ */
 const getWaitlist = async (userId: string, role: string) => {
 	const query: any = { status: "waiting" };
 	if (role !== "admin") {
@@ -45,6 +57,12 @@ const getWaitlist = async (userId: string, role: string) => {
 	return waitlist;
 };
 
+/**
+ * Get currently serving patients for a business
+ * @param userId - Business owner's user ID
+ * @param role - User role ('admin' sees all, others see only their patients)
+ * @returns Array of patients currently being served
+ */
 const getServing = async (userId: string, role: string) => {
 	const query: any = { status: "serving" };
 	if (role !== "admin") {
@@ -57,6 +75,13 @@ const getServing = async (userId: string, role: string) => {
 	return servingList;
 };
 
+/**
+ * Move a patient from waiting to serving status
+ * @param patientId - Patient ID to serve
+ * @param userId - Business owner's user ID
+ * @param role - User role for authorization
+ * @returns Success message with updated queue entry
+ */
 const servePatient = async (
 	patientId: string,
 	userId: string,
@@ -87,6 +112,13 @@ const servePatient = async (
 	return { message: "Patient moved to serving", queueEntry };
 };
 
+/**
+ * Mark a patient consultation as completed
+ * @param patientId - Patient ID to complete
+ * @param userId - Business owner's user ID
+ * @param role - User role for authorization
+ * @returns Success message with completed queue entry and patient data
+ */
 const completePatient = async (
 	patientId: string,
 	userId: string,
@@ -119,6 +151,13 @@ const completePatient = async (
 	return { message: "Patient consultation completed", queueEntry, patient };
 };
 
+/**
+ * Get specific patient details by ID
+ * @param patientId - Patient ID to retrieve
+ * @param userId - Business owner's user ID
+ * @param role - User role for authorization
+ * @returns Patient object with all details
+ */
 const getPatient = async (patientId: string, userId: string, role: string) => {
 	const query: any = { _id: patientId };
 	if (role !== "admin") {
@@ -132,6 +171,12 @@ const getPatient = async (patientId: string, userId: string, role: string) => {
 	return patient;
 };
 
+/**
+ * Get all patients across all statuses for a business
+ * @param userId - Business owner's user ID
+ * @param role - User role ('admin' sees all, others see only their patients)
+ * @returns Array of all queue entries with populated patient details
+ */
 const getAllPatients = async (userId: string, role: string) => {
 	const query: any = {};
 	if (role !== "admin") {
@@ -144,6 +189,12 @@ const getAllPatients = async (userId: string, role: string) => {
 	return servingList;
 };
 
+/**
+ * Add patient via public self-registration (customer-facing)
+ * @param userId - Business owner's user ID
+ * @param patientData - Patient information from public form
+ * @returns Success message with patient ID and queue entry
+ */
 const addCustomerPatient = async (userId: string, patientData: any) => {
 	const user = await User.findById(userId);
 	if (!user) {
@@ -183,6 +234,11 @@ const addCustomerPatient = async (userId: string, patientData: any) => {
 	};
 };
 
+/**
+ * Get public waitlist view (customer-facing, limited data)
+ * @param userId - Business owner's user ID
+ * @returns Array of waiting patients with only names visible
+ */
 const getPublicWaitlist = async (userId: string) => {
 	const waitlist = await Queue.find({ userId, status: "waiting" })
 		.populate("patient", "name")
@@ -191,6 +247,12 @@ const getPublicWaitlist = async (userId: string) => {
 	return waitlist;
 };
 
+/**
+ * Remove patient from waitlist (customer self-cancellation)
+ * @param patientId - Patient ID to remove
+ * @param userId - Business owner's user ID
+ * @returns Success message with updated patient status
+ */
 const removePatient = async (patientId: string, userId: string) => {
 	const queueEntry = await Queue.findOneAndUpdate(
 		{ patient: patientId, userId: userId, status: "waiting" },
@@ -217,6 +279,13 @@ const removePatient = async (patientId: string, userId: string) => {
 	return { message: "Patient marked as canceled", patient };
 };
 
+/**
+ * Cancel patient from waitlist (business owner action)
+ * @param patientId - Patient ID to cancel
+ * @param userId - Business owner's user ID
+ * @param role - User role for authorization
+ * @returns Success message with canceled patient data
+ */
 const cancelPatient = async (
 	patientId: string,
 	userId: string,
