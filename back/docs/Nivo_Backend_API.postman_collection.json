@@ -1,0 +1,756 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "Nivo Backend API",
+		"description": "Complete API collection for Nivo Queue Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "User Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"doctor@clinic.com\",\n  \"password\": \"password123\",\n  \"businessName\": \"Downtown Medical Clinic\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/signup",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "signup"]
+						},
+						"description": "Register a new user account with business information"
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"doctor@clinic.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "login"]
+						},
+						"description": "Authenticate user and receive JWT token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "profile"]
+						},
+						"description": "Get authenticated user's profile information"
+					},
+					"response": []
+				}
+			],
+			"description": "User authentication endpoints"
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Get All Users (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "all"]
+						},
+						"description": "Get all users (admin access required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Role (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/role/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "role", "{{userId}}"]
+						},
+						"description": "Change user role (admin access required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Queue Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/queue-status/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "queue-status", "{{userId}}"]
+						},
+						"description": "Get real-time queue status for a business"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Business Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/businessName/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "businessName", "{{userId}}"]
+						},
+						"description": "Get business name by user ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by Business URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/get-user-by-business/{{businessNameForUrl}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get-user-by-business",
+								"{{businessNameForUrl}}"
+							]
+						},
+						"description": "Find user by URL-friendly business name"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient Statistics",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/patient-stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "patient-stats"]
+						},
+						"description": "Get patient statistics with daily count reset"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Business Hours",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startHour\": 9,\n  \"startMinute\": 0,\n  \"endHour\": 17,\n  \"endMinute\": 30\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/business-hours",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "business-hours"]
+						},
+						"description": "Update business operating hours"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Full Business Hours",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"businessHours\": {\n    \"startHour\": 9,\n    \"startMinute\": 0,\n    \"endHour\": 17,\n    \"endMinute\": 0,\n    \"sundayOpen\": false,\n    \"saturdayOpen\": true\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/user/update-business-hours",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "user", "update-business-hours"]
+						},
+						"description": "Update complete business hours including weekend settings"
+					},
+					"response": []
+				}
+			],
+			"description": "User management and business settings"
+		},
+		{
+			"name": "Queue Management",
+			"item": [
+				{
+					"name": "Add Patient to Queue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"phoneNumber\": 1234567890,\n  \"age\": 35\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patient",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "patient"]
+						},
+						"description": "Add a new patient to the waitlist (authenticated)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Waitlist",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/waitlist",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "waitlist"]
+						},
+						"description": "Get current waitlist (admin sees all, others see their own)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Serving List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/serving",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "serving"]
+						},
+						"description": "Get patients currently being served"
+					},
+					"response": []
+				},
+				{
+					"name": "Serve Patient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patient/{{patientId}}/serve",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"queue",
+								"patient",
+								"{{patientId}}",
+								"serve"
+							]
+						},
+						"description": "Move patient from waiting to serving status"
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Patient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patient/{{patientId}}/complete",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"queue",
+								"patient",
+								"{{patientId}}",
+								"complete"
+							]
+						},
+						"description": "Mark patient consultation as completed"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patient/{{patientId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "patient", "{{patientId}}"]
+						},
+						"description": "Get specific patient details by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Patients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/allpatient",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "allpatient"]
+						},
+						"description": "Get all patients across all statuses"
+					},
+					"response": []
+				},
+				{
+					"name": "Public Patient Registration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Smith\",\n  \"phoneNumber\": 9876543210,\n  \"age\": 28\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/customeradd/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "customeradd", "{{userId}}"]
+						},
+						"description": "Public endpoint for customer self-registration"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Public Waitlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/public-waitlist/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "queue", "public-waitlist", "{{userId}}"]
+						},
+						"description": "Get public waitlist view (only names visible)"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Patient (Self-Cancel)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patientremove/{{patientId}}/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"queue",
+								"patientremove",
+								"{{patientId}}",
+								"{{userId}}"
+							]
+						},
+						"description": "Customer self-cancellation from waitlist"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Patient",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/queue/patient/{{patientId}}/cancelled",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"queue",
+								"patient",
+								"{{patientId}}",
+								"cancelled"
+							]
+						},
+						"description": "Cancel patient from waitlist (business owner action)"
+					},
+					"response": []
+				}
+			],
+			"description": "Queue and patient management endpoints"
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Get Available Slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/available-slots/{{userId}}/{{date}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"appointment",
+								"available-slots",
+								"{{userId}}",
+								"{{date}}"
+							]
+						},
+						"description": "Get available 30-minute time slots for a specific date"
+					},
+					"response": []
+				},
+				{
+					"name": "Book Appointment (Public)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"startTime\": \"2024-01-15T10:00:00.000Z\",\n  \"name\": \"Alice Johnson\",\n  \"phoneNumber\": 5551234567,\n  \"age\": 42\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/book/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "appointment", "book", "{{userId}}"]
+						},
+						"description": "Public appointment booking"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/user-appointments",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "appointment", "user-appointments"]
+						},
+						"description": "Get all appointments for authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/cancel/{{appointmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"appointment",
+								"cancel",
+								"{{appointmentId}}"
+							]
+						},
+						"description": "Cancel an existing appointment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Today's Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/today-bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "appointment", "today-bookings"]
+						},
+						"description": "Get today's scheduled appointments"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Booking (Authenticated)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Bob Wilson\",\n  \"phoneNumber\": 5559876543,\n  \"age\": 31,\n  \"startTime\": \"2024-01-15T14:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/add-booking",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "appointment", "add-booking"]
+						},
+						"description": "Add new appointment booking (business owner)"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/cancel-booking/{{appointmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"appointment",
+								"cancel-booking",
+								"{{appointmentId}}"
+							]
+						},
+						"description": "Cancel appointment booking with patient record update"
+					},
+					"response": []
+				},
+				{
+					"name": "Move to Waitlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/appointment/move-to-waitlist/{{appointmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": [
+								"api",
+								"v1",
+								"appointment",
+								"move-to-waitlist",
+								"{{appointmentId}}"
+							]
+						},
+						"description": "Convert scheduled appointment to waitlist entry"
+					},
+					"response": []
+				}
+			],
+			"description": "Appointment scheduling and management"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string",
+			"description": "JWT token from login response"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string",
+			"description": "User ID for API requests"
+		},
+		{
+			"key": "patientId",
+			"value": "",
+			"type": "string",
+			"description": "Patient ID for specific operations"
+		},
+		{
+			"key": "appointmentId",
+			"value": "",
+			"type": "string",
+			"description": "Appointment ID for operations"
+		},
+		{
+			"key": "businessNameForUrl",
+			"value": "downtownmedicalclinic",
+			"type": "string",
+			"description": "URL-friendly business name"
+		},
+		{
+			"key": "date",
+			"value": "2024-01-15",
+			"type": "string",
+			"description": "Date in YYYY-MM-DD format for appointments"
+		}
+	]
+}
