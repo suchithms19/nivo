@@ -1,6 +1,5 @@
 import type { Request } from "express";
 
-// Extended Request interface with user data
 interface AuthenticatedRequest extends Request {
 	user?: {
 		userId: string;
@@ -8,7 +7,6 @@ interface AuthenticatedRequest extends Request {
 	};
 }
 
-// JWT payload type
 interface JWTPayload {
 	userId: string;
 	role: string;

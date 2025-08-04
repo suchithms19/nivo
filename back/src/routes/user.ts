@@ -10,13 +10,8 @@ const router = Router();
  * All business logic is handled in the controller layer
  */
 
-// POST /signup - User registration
 router.post("/signup", validate(RegisterSchema), UserController.signup);
-
-// POST /login - User authentication
 router.post("/login", validate(LoginSchema), UserController.login);
-
-// GET /profile - Get authenticated user profile
 router.get("/profile", authenticateToken, UserController.getProfile);
 
 export { router as userRouter };

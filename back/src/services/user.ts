@@ -11,34 +11,29 @@ import type { RegisterInput, LoginInput } from "../schemas/index.js";
 const Signup = async (userData: RegisterInput) => {
 	const { email, password, businessName } = userData;
 
-	// Check if user already exists
 	const existingUser = await User.findOne({ email });
 	if (existingUser) {
 		throw new Error("User already exists");
 	}
 
-	// Create URL-friendly business name
 	const businessNameForUrl = businessName
 		.toLowerCase()
-		.replace(/\s+/g, "") // Remove all spaces
-		.replace(/[^a-z0-9-]/g, ""); // Remove special characters except hyphen
+		.replace(/\s+/g, "") 
+		.replace(/[^a-z0-9-]/g, ""); 
 
-	// Hash password
 	const salt = await bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(password, salt);
 
-	// Create new user
 	const user = new User({
 		email,
 		password: hashedPassword,
 		businessName,
 		businessNameForUrl,
-		role: "user", // Default role
+		role: "user", 
 	});
 
 	await user.save();
 
-	// Generate JWT token
 	const token = jwt.sign(
 		{ userId: user._id, role: user.role },
 		process.env.JWT_SECRET!,
@@ -55,19 +50,16 @@ const Signup = async (userData: RegisterInput) => {
 const Login = async (credentials: LoginInput) => {
 	const { email, password } = credentials;
 
-	// Find user by email
 	const user = await User.findOne({ email });
 	if (!user) {
 		throw new Error("Invalid credentials");
 	}
 
-	// Verify password
 	const isMatch = await bcrypt.compare(password, user.password);
 	if (!isMatch) {
 		throw new Error("Invalid credentials");
 	}
 
-	// Generate JWT token
 	const token = jwt.sign(
 		{ userId: user._id, role: user.role },
 		process.env.JWT_SECRET!,
