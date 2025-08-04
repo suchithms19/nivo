@@ -63,7 +63,7 @@ cd nivo
 ### 2. Backend Setup
 
 ```bash
-cd back
+cd server
 
 # Install dependencies
 bun install
@@ -101,7 +101,7 @@ Make sure MongoDB is running on your system. The application will automatically 
 
 ### Backend (TypeScript + Bun)
 ```bash
-cd back
+cd server
 
 # Development server with auto-reload
 bun run dev
@@ -163,7 +163,7 @@ nivo/
 │   ├── public/             # Public assets
 │   └── package.json        # Frontend dependencies
 │
-├── back/                   # TypeScript + Bun backend application
+├── server/                 # TypeScript + Bun backend application
 │   ├── src/
 │   │   ├── controllers/     # Request handlers
 │   │   ├── services/       # Business logic
