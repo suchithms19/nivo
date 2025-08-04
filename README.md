@@ -1,6 +1,6 @@
 # Nivo - Customer experience software
 
-![Dashboard](frontend/src/assets/dashboard.png)
+![Dashboard](client/src/assets/dashboard.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2018.0.0-brightgreen)](https://nodejs.org/)
@@ -33,17 +33,21 @@ Nivo is a customer experience software that helps businesses manage customer flo
 - **Chart.js** - Interactive analytics and data visualization
 
 ### Backend
-- **Node.js** - JavaScript runtime environment
+- **Bun** - Fast JavaScript runtime and package manager
+- **TypeScript** - Type-safe JavaScript development
 - **Express.js** - Fast, minimalist web framework
 - **MongoDB** - NoSQL database for flexible data storage
+- **Mongoose** - MongoDB object modeling for Node.js
 - **Zod** - TypeScript-first schema validation
+- **JWT** - JSON Web Tokens for authentication
+- **bcryptjs** - Password hashing library
 
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (v18.0.0 or higher)
-- **npm** or **yarn** or **bun** (recommended)
+- **Bun** (v1.0.0 or higher) - Fast JavaScript runtime and package manager
+- **Node.js** (v18.0.0 or higher) - For frontend development
 - **MongoDB** (v5.0 or higher)
 - **Git**
 
@@ -59,10 +63,10 @@ cd nivo
 ### 2. Backend Setup
 
 ```bash
-cd backend
+cd back
 
 # Install dependencies
-npm install
+bun install
 
 # Create environment file
 cp .env.example .env
@@ -71,13 +75,16 @@ cp .env.example .env
 # Edit .env with your MongoDB connection string and other settings
 
 # Start the backend server
-npm run dev
+bun run dev
+
+# Optional: Create an admin user
+bun run create-admin
 ```
 
 ### 3. Frontend Setup
 
 ```bash
-cd frontend
+cd client
 
 # Install dependencies
 npm install
@@ -90,10 +97,45 @@ npm run dev
 
 Make sure MongoDB is running on your system. The application will automatically create the necessary collections on first run.
 
+## 🛠️ Development Commands
+
+### Backend (TypeScript + Bun)
+```bash
+cd back
+
+# Development server with auto-reload
+bun run dev
+
+# Build the project
+bun run build
+
+# Format code
+bun run format
+
+# Lint code
+bun run lint
+
+# Create admin user
+bun run create-admin
+```
+
+### Frontend (React + Vite)
+```bash
+cd client
+
+# Development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
 
 ## 📝 Environment Variables
 
-Create a `.env` file in the backend directory:
+Create a `.env` file in the server directory:
 
 ```env
 # Server Configuration
@@ -102,8 +144,8 @@ PORT=5000
 # JWT Configuration  
 JWT_SECRET=your-super-secret-jwt-key-here-change-this-in-production
 
-# Mongodb
-DB=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-db-name
+# MongoDB Configuration
+MONGO_URI=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-db-name
 
 ```
 
@@ -111,7 +153,7 @@ DB=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-db-na
 
 ```
 nivo/
-├── frontend/                 # React frontend application
+├── client/                 # React frontend application
 │   ├── src/
 │   │   ├── components/      # Reusable UI components
 │   │   ├── pages/          # Page components
@@ -121,16 +163,23 @@ nivo/
 │   ├── public/             # Public assets
 │   └── package.json        # Frontend dependencies
 │
-├── backend/                 # Node.js backend application
-│   ├── routes/             # API routes
-│   │   ├── user.js         # User management routes
-│   │   ├── appointment.js  # Appointment routes
-│   │   └── queue.js        # Queue management routes
-│   ├── middleware/         # Express middleware
-│   ├── utils/              # Backend utilities
-│   ├── db.js              # Database models and connection
-│   ├── index.js           # Main server file
-│   └── package.json       # Backend dependencies
+├── back/                   # TypeScript + Bun backend application
+│   ├── src/
+│   │   ├── controllers/     # Request handlers
+│   │   ├── services/       # Business logic
+│   │   ├── routes/         # API route definitions
+│   │   ├── models/         # Mongoose database models
+│   │   ├── middlewares/    # Express middleware
+│   │   ├── schemas/        # Zod validation schemas
+│   │   ├── interfaces/     # TypeScript interfaces
+│   │   ├── config/         # Configuration files
+│   │   └── utils/          # Utility functions
+│   ├── docs/               # API documentation
+│   ├── index.ts           # Main server file
+│   ├── package.json       # Backend dependencies
+│   └── biome.json         # Code formatting and linting
+│
+├── backend/                # Legacy JavaScript backend (deprecated)
 │
 └── README.md              # This file
 ```
