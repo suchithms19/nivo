@@ -18,8 +18,8 @@ const Signup = async (userData: RegisterInput) => {
 
 	const businessNameForUrl = businessName
 		.toLowerCase()
-		.replace(/\s+/g, "") 
-		.replace(/[^a-z0-9-]/g, ""); 
+		.replace(/\s+/g, "")
+		.replace(/[^a-z0-9-]/g, "");
 
 	const salt = await bcrypt.genSalt(10);
 	const hashedPassword = await bcrypt.hash(password, salt);
@@ -29,7 +29,7 @@ const Signup = async (userData: RegisterInput) => {
 		password: hashedPassword,
 		businessName,
 		businessNameForUrl,
-		role: "user", 
+		role: "user",
 	});
 
 	await user.save();

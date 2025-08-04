@@ -1,19 +1,17 @@
 import express from "express";
 import cors from "cors";
 import { connectDatabase } from "./src/config/index.js";
-import { userRouter } from "./src/routes/index.js";
+import { userRouter, queueRouter } from "./src/routes/index.js";
 
 const app = express();
 const PORT = process.env.PORT;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/queue", queueRouter);
 
-// Start server
 async function startServer(): Promise<void> {
 	try {
 		await connectDatabase();

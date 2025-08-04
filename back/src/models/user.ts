@@ -29,19 +29,19 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.resetDailyCountIfNeeded = async function () {
-	const today = new Date().setHours(0, 0, 0, 0); 
+	const today = new Date().setHours(0, 0, 0, 0);
 	const lastReset = this.lastResetDate
 		? new Date(this.lastResetDate).setHours(0, 0, 0, 0)
-		: 0; 
+		: 0;
 
 	if (!this.lastResetDate || today > lastReset) {
-		this.dailyPatients = 0; 
-		this.lastResetDate = new Date(); 
+		this.dailyPatients = 0;
+		this.lastResetDate = new Date();
 		try {
-			await this.save(); 
+			await this.save();
 		} catch (error) {
 			console.error("Error resetting daily count:", error);
-			throw new Error("Failed to reset daily count"); 
+			throw new Error("Failed to reset daily count");
 		}
 	}
 };
