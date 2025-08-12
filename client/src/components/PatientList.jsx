@@ -51,7 +51,7 @@ const PatientList = () => {
               ))}
               {bookings.length === 0 && (
                 <div className="text-center py-6 text-gray-500">
-                  No bookings for today
+                  Today's bookings only (See all in <span onClick={() => navigate('/bookings')} className="text-cuspurple cursor-pointer hover:underline">Bookings</span>)
                 </div>
               )}
             </div>

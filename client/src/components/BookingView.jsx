@@ -57,7 +57,7 @@ export function BookingView() {
   const getAllDates = () => {
     const dates = [];
     const startDate = new Date(); // Start from today
-    startDate.setDate(startDate.getDate() - 7); // Show 7 days before today
+    startDate.setDate(startDate.getDate() - 2); // Show 7 days before today
     const endDate = new Date();
     endDate.setDate(endDate.getDate() + 15); // Show next 15 days
     

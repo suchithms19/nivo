@@ -199,22 +199,6 @@ const SelfAddBook = () => {
             Book Appointment with <span className='capitalize'>{user?.businessName || 'Loading...'}</span>
           </h2>
           
-          <div className="w-full mt-4 mb-6 rounded-lg overflow-hidden shadow-sm">
-            <a 
-              href="https://vocautomotive.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block"
-            >
-              <img 
-                src={adImage} 
-                alt="Advertisement"
-                className="w-full h-[120px] sm:h-[160px] object-cover rounded-lg transition-transform hover:scale-[1.02]"
-                loading="lazy"
-              />
-            </a>
-          </div>
-          
           {error && <div className="text-red-500 text-center mt-2 text-sm">{error}</div>}
         </div>
         
